@@ -12,6 +12,18 @@ export const getProductData = async (req, res) => {
   }
 };
 
+export const getProductDataById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productData = await Product.findById(id).populate("type");
+
+    return res.status(200).json(productData);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json("Something went wrong");
+  }
+};
+
 export const getProductTypeData = async (req, res) => {
   try {
     const productTypeData = await productTypeModel.find();

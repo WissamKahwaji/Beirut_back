@@ -5,6 +5,7 @@ import {
   editProduct,
   editProductTypeData,
   getProductData,
+  getProductDataById,
   getProductTypeData,
   getProductsByType,
 } from "../controllers/product_ctrl.js";
@@ -12,6 +13,7 @@ import {
 const router = express.Router();
 
 router.get("/", getProductData);
+router.get("/byid/:id", getProductDataById);
 router.post("/", addProduct);
 router.put("/:id", editProduct);
 router.get("/by-type", getProductsByType);
