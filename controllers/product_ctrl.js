@@ -60,7 +60,9 @@ export const addProduct = async (req, res) => {
 
     const imgPath =
       req.files && req.files["img"] ? req.files["img"][0].path : null;
-    const imgUrl = imgPath ? `http://localhost:5000/${Date.now()}_img` : null;
+    const imgUrl = imgPath
+      ? `https://beirutback.siidevelopment.com/${Date.now()}_img`
+      : null;
 
     const imgs = {};
     ["first", "second", "third"].forEach(key => {
@@ -69,7 +71,7 @@ export const addProduct = async (req, res) => {
       const imgPath =
         req.files && req.files[imgKey] ? req.files[imgKey][0].path : null;
       imgs[key] = imgPath
-        ? `http://localhost:5000/${Date.now()}_${key}_img`
+        ? `https://beirutback.siidevelopment.com/${Date.now()}_${key}_img`
         : null;
       console.log(imgs);
     });
@@ -133,7 +135,7 @@ export const editProduct = async (req, res) => {
 
     if (req.files && req.files["img"]) {
       const imgPath = req.files["img"][0].path;
-      existingProduct.img = `http://localhost:5000/${Date.now()}_img`;
+      existingProduct.img = `https://beirutback.siidevelopment.com/${Date.now()}_img`;
     }
 
     if (req.files && req.files["imgs"]) {
@@ -143,7 +145,7 @@ export const editProduct = async (req, res) => {
           const imgPath = req.files[imgKey][0].path;
           existingProduct.imgs[
             key
-          ] = `http://localhost:5000/${Date.now()}_${key}_img`;
+          ] = `https://beirutback.siidevelopment.com/${Date.now()}_${key}_img`;
         }
       });
     }

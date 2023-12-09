@@ -18,8 +18,7 @@ export const addContactData = async (req, res) => {
     if (req.files) {
       const imgPath = req.files["img"][0].path;
       urlImg =
-        "https://www.rallyback.siidevelopment.com/" +
-        imgPath.replace(/\\/g, "/");
+        "https://beirutback.siidevelopment.com/" + imgPath.replace(/\\/g, "/");
     }
 
     const newContent = new contactContentModel({
