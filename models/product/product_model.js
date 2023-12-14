@@ -18,9 +18,11 @@ const productSchema = new mongoose.Schema({
     ref: "ProductType",
   },
   desc: String,
-  deepDetails: {
-    deepDetailsSchema,
-  },
+  deepDetails: [
+    {
+      deepDetailsSchema,
+    },
+  ],
 });
 
 export const Product = mongoose.model("Product", productSchema);

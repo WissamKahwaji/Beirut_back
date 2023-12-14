@@ -12,6 +12,25 @@ export const getProductData = async (req, res) => {
   }
 };
 
+export const getProductsAndTypes = async (req, res) => {
+  try {
+    const { type } = req.query;
+    let products;
+    if (type) {
+      products = await productTypeModel
+        .find({ _id: type })
+        .populate("products");
+    } else {
+      products = await productTypeModel.find().populate("products");
+    }
+
+    return res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json("Something went wrong");
+  }
+};
+
 export const getProductDataById = async (req, res) => {
   try {
     const { id } = req.params;

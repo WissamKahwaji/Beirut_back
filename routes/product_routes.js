@@ -7,6 +7,7 @@ import {
   getProductData,
   getProductDataById,
   getProductTypeData,
+  getProductsAndTypes,
   getProductsByType,
 } from "../controllers/product_ctrl.js";
 
@@ -20,4 +21,5 @@ router.get("/by-type", getProductsByType);
 router.get("/product-type", getProductTypeData);
 router.post("/product-type", addProductTypeData);
 router.put("/product-type/:id", editProductTypeData);
+router.get("/type-products", getProductsAndTypes);
 export default router;
