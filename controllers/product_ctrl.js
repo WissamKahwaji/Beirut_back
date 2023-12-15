@@ -87,7 +87,7 @@ export const editProductTypeData = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   try {
-    const { title, type, desc } = req.body;
+    const { title, type, desc, deepDetails } = req.body;
 
     const imgPath =
       req.files && req.files["img"] ? req.files["img"][0].path : null;
@@ -114,11 +114,14 @@ export const addProduct = async (req, res) => {
       title,
       type,
       desc,
+      deepDetails,
     });
 
     // Save the new Product to the database
     await newProduct.save();
-
+    await productTypeModel.findByIdAndUpdate(type, {
+      $push: { products: newProduct._id },
+    });
     return res.status(201).json("Product added successfully");
   } catch (error) {
     console.error(error);
