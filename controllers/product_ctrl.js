@@ -95,7 +95,7 @@ export const deleteProductTypeData = async (req, res) => {
       return res.status(404).json("Product Type not found");
     }
 
-    return res.status(200).json("Product Type deleted successfully");
+    return res.status(200).json(deletedProduct._id);
   } catch (error) {
     console.error(error);
     return res.status(500).json("Something went wrong");
@@ -221,7 +221,7 @@ export const deleteProductData = async (req, res) => {
       return res.status(404).json("Product not found");
     }
 
-    return res.status(200).json("Product deleted successfully");
+    return res.status(200).json(deletedProduct._id);
   } catch (error) {
     console.error(error);
     return res.status(500).json("Something went wrong");
