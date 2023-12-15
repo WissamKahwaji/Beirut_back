@@ -45,7 +45,7 @@ export const getProductDataById = async (req, res) => {
 
 export const getProductTypeData = async (req, res) => {
   try {
-    const productTypeData = await productTypeModel.find();
+    const productTypeData = await productTypeModel.find().select(" -products ");
 
     return res.status(200).json(productTypeData);
   } catch (error) {
