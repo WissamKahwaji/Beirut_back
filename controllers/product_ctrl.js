@@ -92,7 +92,7 @@ export const addProduct = async (req, res) => {
     const imgPath =
       req.files && req.files["img"] ? req.files["img"][0].path : null;
     const imgUrl = imgPath
-      ? `https://beirutback.siidevelopment.com/${Date.now()}_img`
+      ? "https://beirutback.siidevelopment.com/" + imgPath.replace(/\\/g, "/")
       : null;
 
     const imgs = {};
@@ -102,7 +102,7 @@ export const addProduct = async (req, res) => {
       const imgPath =
         req.files && req.files[imgKey] ? req.files[imgKey][0].path : null;
       imgs[key] = imgPath
-        ? `https://beirutback.siidevelopment.com/${Date.now()}_${key}_img`
+        ? "https://beirutback.siidevelopment.com/" + imgPath.replace(/\\/g, "/")
         : null;
       console.log(imgs);
     });
@@ -166,7 +166,8 @@ export const editProduct = async (req, res) => {
 
     if (req.files && req.files["img"]) {
       const imgPath = req.files["img"][0].path;
-      existingProduct.img = `https://beirutback.siidevelopment.com/${Date.now()}_img`;
+      existingProduct.img =
+        "https://beirutback.siidevelopment.com/" + imgPath.replace(/\\/g, "/");
     }
 
     if (req.files && req.files["imgs"]) {
@@ -174,9 +175,9 @@ export const editProduct = async (req, res) => {
         const imgKey = `imgs[${key}]`;
         if (req.files[imgKey]) {
           const imgPath = req.files[imgKey][0].path;
-          existingProduct.imgs[
-            key
-          ] = `https://beirutback.siidevelopment.com/${Date.now()}_${key}_img`;
+          existingProduct.imgs[key] =
+            "https://beirutback.siidevelopment.com/" +
+            imgPath.replace(/\\/g, "/");
         }
       });
     }
