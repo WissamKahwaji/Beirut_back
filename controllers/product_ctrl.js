@@ -95,7 +95,7 @@ export const deleteProductTypeData = async (req, res) => {
       return res.status(404).json("Product Type not found");
     }
 
-    return res.status(200).json(deletedProduct._id);
+    return res.status(200).json(deletedProduct);
   } catch (error) {
     console.error(error);
     return res.status(500).json("Something went wrong");
@@ -139,7 +139,7 @@ export const addProduct = async (req, res) => {
     await productTypeModel.findByIdAndUpdate(type, {
       $push: { products: newProduct._id },
     });
-    return res.status(201).json("Product added successfully");
+    return res.status(201).json(newProduct);
   } catch (error) {
     console.error(error);
     return res.status(500).json("Something went wrong");
@@ -204,7 +204,7 @@ export const editProduct = async (req, res) => {
 
     await existingProduct.save();
 
-    return res.status(200).json("Product updated successfully");
+    return res.status(200).json(existingProduct);
   } catch (error) {
     console.error(error);
     return res.status(500).json("Something went wrong");
@@ -221,7 +221,7 @@ export const deleteProductData = async (req, res) => {
       return res.status(404).json("Product not found");
     }
 
-    return res.status(200).json(deletedProduct._id);
+    return res.status(200).json(deletedProduct);
   } catch (error) {
     console.error(error);
     return res.status(500).json("Something went wrong");
