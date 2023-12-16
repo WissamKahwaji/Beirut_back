@@ -65,6 +65,10 @@ app.use(
     { name: "content[1]['img']", maxCount: 1 },
     { name: "content[2]['img']", maxCount: 1 },
     { name: "content[3]['img']", maxCount: 1 },
+    { name: "content[0].img", maxCount: 1 },
+    { name: "content[1].img", maxCount: 1 },
+    { name: "content[2].img", maxCount: 1 },
+    { name: "content[3].img", maxCount: 1 },
   ])
 );
 
