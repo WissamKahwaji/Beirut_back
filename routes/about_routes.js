@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.get("/", getAboutData);
 router.post("/", addAboutData);
-router.put("/", editAboutData);
+router.put("/:id", editAboutData);
 
 export default router;
