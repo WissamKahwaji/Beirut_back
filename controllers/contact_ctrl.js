@@ -59,7 +59,6 @@ export const addContactData = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
 export const editContactData = async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,48 +75,57 @@ export const editContactData = async (req, res) => {
     }
 
     if (content) {
+      // Find and update the associated contactContent
+      const contactContent = await contactContentModel.findById(
+        contact.content
+      );
+
+      if (!contactContent) {
+        return res.status(404).json({ message: "Contact Content not found" });
+      }
+
       if (content.titleOne) {
-        contact.content.titleOne = content.titleOne;
+        contactContent.titleOne = content.titleOne;
       }
       if (content.titleTwo) {
-        contact.content.titleTwo = content.titleTwo;
+        contactContent.titleTwo = content.titleTwo;
       }
-
       if (content.phoneNumber) {
-        contact.content.phoneNumber = content.phoneNumber;
+        contactContent.phoneNumber = content.phoneNumber;
       }
       if (content.location) {
-        contact.content.location = content.location;
+        contactContent.location = content.location;
       }
       if (content.email) {
-        contact.content.email = content.email;
+        contactContent.email = content.email;
       }
       if (content.emailOne) {
-        contact.content.emailOne = content.emailOne;
-      }
-      if (content.emailTwo) {
-        contact.content.emailTwo = content.emailTwo;
+        contactContent.emailOne = content.emailOne;
       }
       if (content.mobileOne) {
-        contact.content.mobileOne = content.mobileOne;
+        contactContent.mobileOne = content.mobileOne;
       }
       if (content.mobileTwo) {
-        contact.content.mobileTwo = content.mobileTwo;
+        contactContent.mobileTwo = content.mobileTwo;
       }
       if (content.whatsApp) {
-        contact.content.whatsApp = content.whatsApp;
+        contactContent.whatsApp = content.whatsApp;
       }
       if (content.faceBook) {
-        contact.content.faceBook = content.faceBook;
+        contactContent.faceBook = content.faceBook;
       }
       if (content.linkedIn) {
-        contact.content.linkedIn = content.linkedIn;
+        contactContent.linkedIn = content.linkedIn;
       }
       if (content.instagram) {
-        contact.content.instagram = content.instagram;
+        contactContent.instagram = content.instagram;
       }
+
+      // Save the updated contactContent
+      await contactContent.save();
     }
 
+    // Save the updated contact
     const updatedContact = await contact.save();
 
     return res.status(200).json({
