@@ -57,7 +57,12 @@ export const getProductTypeData = async (req, res) => {
 export const addProductTypeData = async (req, res) => {
   try {
     const { name } = req.body;
-    const newType = new productTypeModel({ name });
+    const imgPath =
+      req.files && req.files["img"] ? req.files["img"][0].path : null;
+    const imgUrl = imgPath
+      ? "https://beirutback.siidevelopment.com/" + imgPath.replace(/\\/g, "/")
+      : null;
+    const newType = new productTypeModel({ name, img: imgUrl });
     await newType.save();
 
     return res.status(201).json(newType);
@@ -71,12 +76,21 @@ export const editProductTypeData = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
+    const imgPath =
+      req.files && req.files["img"] ? req.files["img"][0].path : null;
+    const imgUrl = imgPath
+      ? "https://beirutback.siidevelopment.com/" + imgPath.replace(/\\/g, "/")
+      : null;
     const type = await productTypeModel.findById(id);
     if (!type) {
       return res.status(404).json("Product Type not found");
     }
     type.name = name;
-
+    if (imgPath != null) {
+      type.img = imgUrl;
+    } else {
+      type.img = type.img;
+    }
     await type.save();
     return res.status(201).json(type);
   } catch (error) {
@@ -85,17 +99,43 @@ export const editProductTypeData = async (req, res) => {
   }
 };
 
+// export const deleteProductTypeData = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     const deletedProduct = await productTypeModel.findByIdAndDelete(id);
+
+//     if (!deletedProduct) {
+//       return res.status(404).json("Product Type not found");
+//     }
+
+//     return res.status(200).json(deletedProduct);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json("Something went wrong");
+//   }
+// };
 export const deleteProductTypeData = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedProduct = await productTypeModel.findByIdAndDelete(id);
+    // Find the product type
+    const productType = await productTypeModel.findById(id);
 
-    if (!deletedProduct) {
+    if (!productType) {
       return res.status(404).json("Product Type not found");
     }
 
-    return res.status(200).json(deletedProduct);
+    // Get the product IDs associated with the product type
+    const productIds = productType.products;
+
+    // Delete all associated products
+    await Product.deleteMany({ _id: { $in: productIds } });
+
+    // Delete the product type
+    const deletedProductType = await productTypeModel.findByIdAndDelete(id);
+
+    return res.status(200).json(deletedProductType);
   } catch (error) {
     console.error(error);
     return res.status(500).json("Something went wrong");
