@@ -98,3 +98,63 @@ export const addAboutData = async (req, res) => {
     return res.status(500).json("Something went wrong");
   }
 };
+
+export const editAboutData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, content } = req.body;
+
+    const imgPath =
+      req.files && req.files["img"] ? req.files["img"][0].path : null;
+
+    const contentWithImages = content.map((contentItem, index) => {
+      const contentImgKey = `content[${index}].img`;
+      const contentImgPath =
+        req.files && req.files[contentImgKey]
+          ? req.files[contentImgKey][0].path
+          : null;
+      return {
+        ...contentItem,
+        img: contentImgPath
+          ? "https://beirutback.siidevelopment.com/" +
+            contentImgPath.replace(/\\/g, "/")
+          : contentItem.img,
+      };
+    });
+
+    const existingAbout = await aboutModel.findById(id);
+
+    if (!existingAbout) {
+      return res.status(404).json({ message: "About not found" });
+    }
+
+    existingAbout.img = imgPath
+      ? "https://beirutback.siidevelopment.com/" + imgPath.replace(/\\/g, "/")
+      : existingAbout.img;
+    existingAbout.title = title;
+    existingAbout.description = description;
+
+    if (contentWithImages && contentWithImages.length > 0) {
+      existingAbout.content.forEach((existingContent, index) => {
+        if (contentWithImages[index]) {
+          if (contentWithImages[index].text) {
+            existingContent.text = contentWithImages[index].text;
+          }
+          if (contentWithImages[index].title) {
+            existingContent.title = contentWithImages[index].title;
+          }
+        }
+      });
+    }
+
+    await existingAbout.save();
+
+    return res.status(200).json({
+      message: "About data updated successfully",
+      data: existingAbout,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
