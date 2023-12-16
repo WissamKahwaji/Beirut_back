@@ -54,6 +54,20 @@ export const getProductTypeData = async (req, res) => {
   }
 };
 
+export const getProductTypeByIdData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productTypeData = await productTypeModel
+      .findById(id)
+      .select(" -products ");
+
+    return res.status(200).json(productTypeData);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json("Something went wrong");
+  }
+};
+
 export const addProductTypeData = async (req, res) => {
   try {
     const { name } = req.body;
@@ -99,22 +113,6 @@ export const editProductTypeData = async (req, res) => {
   }
 };
 
-// export const deleteProductTypeData = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const deletedProduct = await productTypeModel.findByIdAndDelete(id);
-
-//     if (!deletedProduct) {
-//       return res.status(404).json("Product Type not found");
-//     }
-
-//     return res.status(200).json(deletedProduct);
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json("Something went wrong");
-//   }
-// };
 export const deleteProductTypeData = async (req, res) => {
   try {
     const { id } = req.params;

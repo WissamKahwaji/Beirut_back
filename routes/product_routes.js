@@ -8,6 +8,7 @@ import {
   editProductTypeData,
   getProductData,
   getProductDataById,
+  getProductTypeByIdData,
   getProductTypeData,
   getProductsAndTypes,
   getProductsByType,
@@ -26,4 +27,5 @@ router.post("/product-type", addProductTypeData);
 router.put("/product-type/:id", editProductTypeData);
 router.delete("/delete-product-type/:id", deleteProductTypeData);
 router.get("/type-products", getProductsAndTypes);
+router.get("/get-type/:id", getProductTypeByIdData);
 export default router;
