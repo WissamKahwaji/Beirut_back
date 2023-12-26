@@ -24,7 +24,7 @@ export const signin = async (req, res) => {
     const token = jwt.sign(
       { id: existingUser._id },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "7d" }
+      { expiresIn: "1y" }
     );
     // existingUser = existingUser.select('-password');
     res.status(200).json({
@@ -46,7 +46,7 @@ export const addAuth = async (req, res) => {
     });
     await newUser.save();
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "7d",
+      expiresIn: "1y",
     });
     return res.status(201).json({
       message: "Success",
