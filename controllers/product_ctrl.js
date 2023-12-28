@@ -203,7 +203,7 @@ export const getProductsByType = async (req, res) => {
 export const editProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, type, desc } = req.body;
+    const { title, type, desc, deepDetails } = req.body;
 
     const existingProduct = await Product.findById(id);
     if (!existingProduct) {
@@ -220,6 +220,9 @@ export const editProduct = async (req, res) => {
 
     if (desc) {
       existingProduct.desc = desc;
+    }
+    if (deepDetails) {
+      existingProduct.deepDetails = deepDetails;
     }
 
     if (req.files && req.files["img"]) {
