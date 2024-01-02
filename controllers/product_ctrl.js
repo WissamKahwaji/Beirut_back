@@ -1,5 +1,11 @@
 import { Product } from "../models/product/product_model.js";
 import { productTypeModel } from "../models/product/product_type_model.js";
+import dotenv from "dotenv";
+import Stripe from "stripe";
+
+dotenv.config();
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_DEV);
 
 export const getProductData = async (req, res) => {
   try {
@@ -263,6 +269,39 @@ export const deleteProductData = async (req, res) => {
     }
 
     return res.status(200).json(deletedProduct);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json("Something went wrong");
+  }
+};
+
+export const createPaymentIntent = async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount * 100,
+      currency: "aed",
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
+    console.log(paymentIntent);
+    res.status(200).json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json("Something went wrong");
+  }
+};
+
+export const getConfig = async (req, res) => {
+  try {
+    const publicKey = process.env.STRIPE_PUBLIC_KEY_DEV;
+    res.status(200).json({
+      publicKey: publicKey,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json("Something went wrong");

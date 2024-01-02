@@ -2,10 +2,12 @@ import express from "express";
 import {
   addProduct,
   addProductTypeData,
+  createPaymentIntent,
   deleteProductData,
   deleteProductTypeData,
   editProduct,
   editProductTypeData,
+  getConfig,
   getProductData,
   getProductDataById,
   getProductTypeByIdData,
@@ -29,4 +31,6 @@ router.put("/product-type/:id", auth, editProductTypeData);
 router.delete("/delete-product-type/:id", auth, deleteProductTypeData);
 router.get("/type-products", getProductsAndTypes);
 router.get("/get-type/:id", getProductTypeByIdData);
+router.post("/create-payment", createPaymentIntent);
+router.get("/config", getConfig);
 export default router;

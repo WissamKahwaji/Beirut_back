@@ -15,6 +15,7 @@ import logoRoutes from "./routes/logo_routes.js";
 import productRoutes from "./routes/product_routes.js";
 import homeRoutes from "./routes/home_routes.js";
 import authRoutes from "./routes/auth_routes.js";
+import orderRoutes from "./routes/order_routes.js";
 const app = express();
 dotenv.config();
 
@@ -80,6 +81,7 @@ app.use("/logo", logoRoutes);
 app.use("/products", productRoutes);
 app.use("/home", homeRoutes);
 app.use("/auth", authRoutes);
+app.use("/orders", orderRoutes);
 
 app.get("/", (req, res) => res.send("Server is Ready"));
 
