@@ -5,7 +5,7 @@ import Stripe from "stripe";
 
 dotenv.config();
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_DEV);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_PROD);
 
 export const getProductData = async (req, res) => {
   try {
@@ -298,7 +298,7 @@ export const createPaymentIntent = async (req, res) => {
 
 export const getConfig = async (req, res) => {
   try {
-    const publicKey = process.env.STRIPE_PUBLIC_KEY_DEV;
+    const publicKey = process.env.STRIPE_PUBLIC_KEY_PROD;
     res.status(200).json({
       publicKey: publicKey,
     });
