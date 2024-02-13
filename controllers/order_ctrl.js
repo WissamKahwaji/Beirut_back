@@ -34,11 +34,31 @@ export const getUserOrders = async (req, res) => {
   }
 };
 
+export const getLastUserOrder = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const lastOrder = await orderModel
+      .findOne({ userId: userId })
+      .sort({ createdAt: -1 }) // Sort by createdAt field in descending order
+      .limit(1); // Limit the result to 1 order
+
+    if (!lastOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    return res.status(200).json(lastOrder);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json("Something went wrong");
+  }
+};
+
 export const addOrder = async (req, res) => {
   try {
     const {
       userId,
       userName,
+      country,
       city,
       userStreet,
       userBuilding,
@@ -54,6 +74,7 @@ export const addOrder = async (req, res) => {
     const newOrder = new orderModel({
       userId: userId,
       userName,
+      country,
       city,
       userStreet,
       userBuilding,
@@ -71,6 +92,7 @@ export const addOrder = async (req, res) => {
 
     return res.status(201).json({
       message: "Order added successfully",
+      data: newOrder,
     });
   } catch (error) {
     console.error(error);

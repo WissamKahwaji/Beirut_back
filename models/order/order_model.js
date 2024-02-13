@@ -4,6 +4,7 @@ const orderSchema = new mongoose.Schema(
   {
     userId: String,
     userName: String,
+    country: String,
     city: String,
     userStreet: String,
     userBuilding: String,
