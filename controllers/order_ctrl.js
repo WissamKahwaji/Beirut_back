@@ -99,3 +99,19 @@ export const addOrder = async (req, res) => {
     return res.status(500).json("Something went wrong");
   }
 };
+
+export const deleteOrderById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await orderModel.findByIdAndDelete(id);
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    return res.status(200).json(order);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};

@@ -148,7 +148,7 @@ export const deleteProductTypeData = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   try {
-    const { title, type, desc, deepDetails } = req.body;
+    const { title, type, desc, deepDetails, priceKg } = req.body;
 
     const imgPath =
       req.files && req.files["img"] ? req.files["img"][0].path : null;
@@ -176,6 +176,7 @@ export const addProduct = async (req, res) => {
       type,
       desc,
       deepDetails,
+      priceKg,
     });
 
     // Save the new Product to the database
@@ -209,7 +210,7 @@ export const getProductsByType = async (req, res) => {
 export const editProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, type, desc, deepDetails } = req.body;
+    const { title, type, desc, deepDetails, priceKg } = req.body;
 
     const existingProduct = await Product.findById(id);
     if (!existingProduct) {
@@ -229,6 +230,9 @@ export const editProduct = async (req, res) => {
     }
     if (deepDetails) {
       existingProduct.deepDetails = deepDetails;
+    }
+    if (priceKg) {
+      existingProduct.priceKg = priceKg;
     }
 
     if (req.files && req.files["img"]) {

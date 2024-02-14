@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addOrder,
+  deleteOrderById,
   getLastUserOrder,
   getOrderById,
   getOrders,
@@ -14,5 +15,6 @@ router.get("/:id", getOrderById);
 router.post("/submit", addOrder);
 router.get("/user-orders/:userId", getUserOrders);
 router.get("/last-user-order/:userId", getLastUserOrder);
+router.delete("/delete-order/:id", deleteOrderById);
 
 export default router;

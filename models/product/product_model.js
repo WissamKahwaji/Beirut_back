@@ -19,6 +19,7 @@ const productSchema = new mongoose.Schema({
   },
   desc: String,
   deepDetails: [deepDetailsSchema],
+  priceKg: Number,
 });
 
 export const Product = mongoose.model("Product", productSchema);
