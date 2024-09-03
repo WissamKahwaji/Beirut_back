@@ -62,6 +62,8 @@ export const addOrder = async (req, res) => {
       city,
       userStreet,
       userBuilding,
+      userFloorNo,
+      userUnitNo,
       userMobileNumber,
       userNote,
       orderStatus,
@@ -78,7 +80,8 @@ export const addOrder = async (req, res) => {
       city,
       userStreet,
       userBuilding,
-
+      userFloorNo,
+      userUnitNo,
       userMobileNumber,
       userNote,
       orderStatus,
